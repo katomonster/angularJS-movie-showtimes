@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="ShowtimesApp">
+	<head>
+		<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Movie showtimes in AngularJS</title>
+		<script src="javascripts/angular.min.js"></script>
+		<script src="javascripts/showtimes.js"></script>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="stylesheets/styles.min.css" type="text/css"/>
+	</head>
+	<body>
+		<main ng-controller="ShowtimesController" ng-init="getJson()">
+			<div class="search__wrapper">
+                <input type="text" id="search--input" placeholder="Search Movies..." ng-model="val" ng-change="searchMovie(val)"/>
+            </div>
+            <nav class="nav--theaters">
+                <a ng-repeat="showtime in movieShowtimes" ng-class="getNavClass(selectedTheater, showtime.name)" ng-click="setCurrentData(showtime.name)">  
+                    <span>{{showtime.name}}</span>
+                </a>
+            </nav>
+            <ul class="results__wrapper">
+                <li ng-repeat="data in selectedData" class= "results--item">
+                    <figure>
+                        <img ng-src={{data.poster}} alt="{{data.title}} poster"/>
+                    </figure>
+                    <div class="result--info">
+                        <h2>{{data.title}}<span>({{data.rating}})</span></h2>
+                        <div class="result--showtime">
+                        	<span ng-repeat="showtime in data.showtimes" ng-class="getTimeClass(showtime)">{{showtime.formatted}}</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+		</main>
+	</body>
+</html>
